@@ -1,25 +1,139 @@
+import { Component, useState } from 'react';
 import './App.css'
 
-const fruits =[
-  {name : "딸기", color: "빨강", 크기 : 2},
-  {name : "바나나", color: "노랑", 크기 : 5},
-  {name : "키위", color: "초록", 크기 : 3},
-  {name : "사과", color: "빨강", 크기 : 4},
-  {name : "블루베리", color: "파랑", 크기 : 1},
-  {name : "오렌지", color: "주황", 크기 : 4},
-  {name : "포도", color: "보라", 크기 : 2},
-  {name : "레몬", color: "노랑", 크기 : 3},
-  {name : "체리", color: "빨강", 크기 : 2},
-  {name : "수박", color: "초록", 크기 : 8},
-]
+function App() {
+  const [counter, setCounter] = useState(0);
+  const [inputValue, setInputValue] = useState(0)
 
-function App(){
-  return(
+
+  const incrementCounter = () => {
+    setCounter(counter + 1);
+  };
+  const decrementCounter = () => {
+    setCounter(counter - 1);
+  }
+  return (
     <>
-    {fruits.filter((fruit) => fruit.color === "노랑").
-    map((fruit) => (<div key={fruit.name}>이름 : {fruit.name}, 색깔: {fruit.color}, 크기 : {fruit.크기}</div>))}
+      <Count counter={counter} />
+      <PlusButton
+        setCounter={setCounter}
+        incrementCounter={incrementCounter} />
+
+      <MinusButton
+        setCounter={setCounter}
+        decrementCounter={decrementCounter} />
+
+      <CounterInput
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        setCounter={setCounter} />
     </>
   );
 }
+
+function CounterInput({ inputValue, setInputValue,setCounter }) {
+  return (
+    <>
+      <input type="number" value={inputValue} onChange={(event) => setInputValue(event.target.value)} />
+      <button onClick={() => setCounter(inputValue)}>입력</button>
+    </>
+  );
+}
+
+
+function PlusButton({ setCounter }) {
+  return (
+    <button
+      onClick={() => {
+        setCounter((prev) => {
+          return prev + 1;
+        });
+      }}
+    >
+      +
+    </button>
+  );
+}
+
+function MinusButton({ setCounter }) {
+  return (<button
+    onClick={() => {
+      setCounter((prev) => {
+        return prev - 1;
+      })
+    }}
+  >
+    -
+  </button>
+  );
+}
+
+
+
+function Count({ counter }) {
+  return (
+    <div>counter : {counter}</div>
+  )
+}
+
+
+
+// class App extends Component {
+//   state = { counter: 1 };
+//   incrementCounter = () => {
+//     this.setState({counter: this.state.counter + 1})
+//   }
+
+//   decrementCounter = () => {
+//     this.setState({counter: this.state.counter - 1})
+//   }
+
+//   render() {
+//     return (
+//       <>
+//       <Count counter={this.state.counter}/>
+//       <PlusButton incrementCounter = {this.incrementCounter}/>
+//       <MinusButton decrementCounter = {this.decrementCounter} />
+
+//         {/* <div>counter: {this.state.counter}</div> */}
+//         {/* <button onClick={() => this.setState({
+//           counter: this.state.counter + 1
+//         }
+//         )}>+
+//         </button>
+//         <button onClick={() => this.setState({
+//           counter: this.state.counter - 1
+//         }
+//         )}>-
+//         </button> */}
+//       </>
+//     );}}
+
+// class PlusButton extends Component{
+//   render() {
+//     return ( <button onClick={this.props.incrementCounter}
+//     >
+//       +
+//         </button>)
+//   }
+// }
+
+// class MinusButton extends Component{
+//   render() {
+//     return( <button onClick={this.props.decrementCounter}
+//     >
+//       -
+//         </button>)
+//   }
+// }
+// class Count extends Component{
+//   constructor(props){
+//     super(props);
+//   }
+//   render() {
+//     return <div>counter: {this.props.counter}</div>;
+//   }
+// }
+
 
 export default App;
